@@ -30,6 +30,10 @@ firmware, first setup, and day-to-day use. For the parts, see the
 
 ## Controller wiring
 
+![SKR Pico connections: case feeder blue, bullet feeder red, touchscreen green, fan pink, 24 V power yellow](images/skr-pico-connections.png)
+
+*Board drawing based on the BigTreeTech SKR Pico V1.0 pin diagram.*
+
 ### Ports
 
 | What | SKR Pico connector | Notes |
