@@ -49,4 +49,4 @@ case or bullet feeder and twice for a dual setup.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| | | | |
+| Magnet, 12 x 3 mm | 2 | | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
