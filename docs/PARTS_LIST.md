@@ -3,17 +3,36 @@
 Quantities are for one controller. "Per feeder" items are needed once for a
 case or bullet feeder and twice for a dual setup.
 
-## Electronics
+## Controller and touchscreen
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| BigTreeTech SKR Pico V1.0 | 1 | controller | |
-| LCDWiki ES3C28P 2.8" ESP32-S3 display | 1 | touchscreen | |
-| 24 V power supply | 1 | | |
-| NEMA 17 stepper motor with 51:1 gearbox | per feeder | | |
-| Part sensor, 5 V: IR sensor, or break-beam pair (emitter + receiver) | per feeder | either type | |
-| 24 V fan | 1 | driver cooling, on FAN1; required for dual | |
+| BigTreeTech SKR Pico V1.0 | 1 | controller | [Amazon](https://www.amazon.com/dp/B09MVJ5XKH) |
+| LCDWiki ES3C28P 2.8" ESP32-S3 display | 1 | touchscreen | [Amazon](https://www.amazon.com/dp/B0FKG7WRWV) |
+| 24 V fan | 1 | driver cooling, on FAN1; required for dual | [Amazon](https://www.amazon.com/dp/B0757RPCN9) |
 | WS2812 RGB LED | 1 | optional external status light | |
+
+## Power
+
+| Part | Qty | Notes | Link |
+|---|---|---|---|
+| 24 V power supply | 1 | | |
+| Power jack | 1 | | [Amazon](https://www.amazon.com/dp/B0D9B7WR23) |
+| Power switch | 1 | | [Amazon](https://www.amazon.com/dp/B07S2QJKTX) |
+
+## Feeder drive
+
+| Part | Qty | Notes | Link |
+|---|---|---|---|
+| NEMA 17 stepper motor, 51:1 gearbox | per feeder | | [Amazon](https://www.amazon.com/dp/B00QEVLDVO) |
+| Shaft coupler | per feeder | | [Amazon](https://www.amazon.com/dp/B08QVKMDC6) |
+
+## Part sensor (one per feeder, either type)
+
+| Part | Qty | Notes | Link |
+|---|---|---|---|
+| TCRT5000 infrared reflective sensor | per feeder | IR sensor: one unit | [Amazon](https://www.amazon.com/dp/B00LZV1V10) |
+| IR break-beam sensor | per feeder | emitter + receiver pair | [Amazon](https://www.amazon.com/dp/B0FPCR98F2) |
 
 ## Wiring
 
