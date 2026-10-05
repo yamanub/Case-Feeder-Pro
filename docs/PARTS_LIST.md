@@ -49,4 +49,10 @@ case or bullet feeder and twice for a dual setup.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| Magnet, 12 x 3 mm | 2 | | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
+| M4 x 10 mm screw | 31 | | [Amazon](https://www.amazon.com/dp/B0G19FJ4NV) (assorted lengths) |
+| M4 x 16 mm screw | 6 | | [Amazon](https://www.amazon.com/dp/B0G19FJ4NV) (assorted lengths) |
+| M4 nut | 24 | | [Amazon](https://www.amazon.com/dp/B0F8GGH5GX) |
+| M4 threaded insert | 11 | | |
+| M3 x 12 mm screw | 6 | | |
+| M3 x 6 mm screw | 2 | | |
+| Magnet, 12 x 3 mm | 2 | feeder exit tube assembly | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
