@@ -31,6 +31,18 @@ side by side from one controller, with a touchscreen to control them.
   <img src="docs/images/bullet-feeder-underside.png" width="32%" alt="Bullet feeder underside with the 51:1 motor">
 </p>
 
+### Controller case
+
+The SKR Pico and the touchscreen share one case, with the power switch,
+power jack and driver fan on its end panel.
+
+<p>
+  <img src="docs/images/controller-case-front.png" width="24%" alt="Controller case, front: touchscreen, power switch, power jack and fan">
+  <img src="docs/images/controller-case-rear.png" width="24%" alt="Controller case, rear: vents and USB-C port">
+  <img src="docs/images/controller-case-open.png" width="24%" alt="Controller case open, SKR Pico inside">
+  <img src="docs/images/controller-case-bottom.png" width="24%" alt="Controller case, bottom with mounting slots">
+</p>
+
 ## Features
 
 - **One firmware, three machines:** case feeder, bullet feeder, or dual
