@@ -9,6 +9,16 @@ side by side from one controller, with a touchscreen to control them.
 - **Touchscreen:** LCDWiki ES3C28P 2.8" ESP32-S3 display. It shows each
   feeder's state, speed and rate, sounds alerts, and holds the settings.
 
+## The feeders
+
+### Bullet feeder
+
+<p>
+  <img src="docs/images/bullet-feeder-front.png" width="32%" alt="Bullet feeder, front view">
+  <img src="docs/images/bullet-feeder-top.png" width="32%" alt="Bullet feeder plate, top view">
+  <img src="docs/images/bullet-feeder-underside.png" width="32%" alt="Bullet feeder underside with the 51:1 motor">
+</p>
+
 ## Features
 
 - **One firmware, three machines:** case feeder, bullet feeder, or dual
