@@ -11,7 +11,7 @@ case or bullet feeder and twice for a dual setup.
 | LCDWiki ES3C28P 2.8" ESP32-S3 display | 1 | touchscreen | |
 | 24 V power supply | 1 | | |
 | NEMA 17 stepper motor with 51:1 gearbox | per feeder | | |
-| Break-beam sensor pair (emitter + receiver), 5 V | per feeder | | |
+| Part sensor, 5 V: IR sensor, or break-beam pair (emitter + receiver) | per feeder | either type | |
 | 24 V fan | 1 | driver cooling, on FAN1; required for dual | |
 | WS2812 RGB LED | 1 | optional external status light | |
 

@@ -4,7 +4,7 @@ Firmware for an automatic brass case feeder, a bullet feeder, or both run
 side by side from one controller, with a touchscreen to control them.
 
 - **Controller:** BigTreeTech SKR Pico V1.0 (RP2040). It drives the feeder
-  motors, watches the break-beam sensors, detects and clears jams, and stores
+  motors, watches the part sensors, detects and clears jams, and stores
   the settings.
 - **Touchscreen:** LCDWiki ES3C28P 2.8" ESP32-S3 display. It shows each
   feeder's state, speed and rate, sounds alerts, and holds the settings.
@@ -14,7 +14,7 @@ side by side from one controller, with a touchscreen to control them.
 - **One firmware, three machines:** case feeder, bullet feeder, or dual
   (both). Choose on the touchscreen; no rewiring, since each feeder has its
   own ports.
-- **Beam hold:** the motor stops while a part waits at the beam and restarts
+- **Beam hold:** the motor stops while a part waits at the sensor and restarts
   when it is taken.
 - **Jam detection and recovery:** sensorless stall detection (TMC2209
   StallGuard) reverses the plate to clear a jam, then feeds forward again. A

@@ -19,7 +19,7 @@ firmware, first setup, and day-to-day use. For the parts, see the
 ## How it fits together
 
 - The **controller** (BTT SKR Pico V1.0) runs everything that moves: the
-  feeder motors, the break-beam sensors, jam detection and the saved
+  feeder motors, the part sensors, jam detection and the saved
   settings. It runs a **case feeder**, a **bullet feeder**, or **both**.
 - The **touchscreen** (LCDWiki ES3C28P) connects to the controller with a
   4-wire cable. It shows each feeder, sends your commands, and plays the
@@ -40,10 +40,9 @@ firmware, first setup, and day-to-day use. For the parts, see the
 |---|---|---|
 | 24 V supply | **POWER** screw terminal | +24 V to `12/24V`, 0 V to `GND` |
 | Case feeder motor | **X** motor connector | |
-| Case feeder beam receiver | **Y-STOP** (`IO3 / GND / 5V`) | signal to `IO3` |
+| Case feeder sensor | **Y-STOP** (`IO3 / GND / 5V`) | see [Part sensors](#part-sensors) |
 | Bullet feeder motor | **E** motor connector | |
-| Bullet feeder beam receiver | **Z-STOP** (`IO25 / GND / 5V`) | signal to `IO25` |
-| Beam emitters | any `5V` + `GND` pair, such as the feeder's own STOP connector | the emitters only need power; see [Beam sensors](#beam-sensors) |
+| Bullet feeder sensor | **Z-STOP** (`IO25 / GND / 5V`) | see [Part sensors](#part-sensors) |
 | Touchscreen | **Raspberry Pi UART** header (`5V 5V GND IO1 IO0`) | see [Touchscreen wiring](#touchscreen-wiring) |
 | Driver fan | **FAN1** | a **24 V** fan; FAN1 switches the 24 V input. Required when running two feeders |
 | Status light (optional) | **RGB** header (`GND / IO24 / 5V`) | a WS2812 LED; it mirrors the on-board RGB LED |
@@ -60,8 +59,8 @@ Every board is jumpered the same way, whatever the machine:
 |---|---|---|
 | **X-DIAG** | **fitted** | connects the case motor driver's stall signal to X-STOP |
 | **E0-DIAG** | **fitted** | connects the bullet motor driver's stall signal to E0-STOP |
-| **Y-DIAG** | **removed** | would connect an unused driver to the case beam input |
-| **Z-DIAG** | **removed** | would connect an unused driver to the bullet beam input |
+| **Y-DIAG** | **removed** | would connect an unused driver to the case sensor input |
+| **Z-DIAG** | **removed** | would connect an unused driver to the bullet sensor input |
 | BOOT | only for the first flash | see [Flashing the firmware](#flashing-the-firmware) |
 
 Leave the X-STOP and E0-STOP connectors themselves empty; with the jumpers
@@ -77,15 +76,23 @@ the wrong way, don't rewire; set the direction in software (see
 
 The motor current is fixed in the firmware at 0.95 A.
 
-### Beam sensors
+### Part sensors
 
-Each feeder has one break-beam pair at its outlet. The receiver connects to
-that feeder's STOP connector (signal, GND, 5V). The emitter only needs power:
-take `5V` and `GND` from any connector that has them, such as the same STOP
-connector, shared with the receiver. Fan and motor connectors do not carry
-5V. By default the firmware
-expects the receiver's signal to read **LOW while the beam is blocked**;
-sensors that work the other way are set with one command during setup.
+Each feeder has one sensor at its outlet that sees each part go by. Two
+types work; both are 3-wire 5 V sensors:
+
+| Sensor type | Wiring to the feeder's STOP connector |
+|---|---|
+| **IR sensor** (one unit) | signal to `IO`, `5V`, `GND` |
+| **Break-beam** (emitter + receiver) | **receiver**: signal to `IO`, `5V`, `GND`. **Emitter**: `5V` and `GND` only, shared with the receiver on the same connector |
+
+The case feeder's sensor goes on **Y-STOP** (`IO3`), the bullet feeder's on
+**Z-STOP** (`IO25`). The firmware calls the sensor the *beam*: "beam
+blocked" means the sensor sees a part.
+
+By default the firmware expects the signal to read **LOW while a part is
+there**. A sensor that works the other way is set with one command during
+[First setup](#first-setup).
 
 ## Touchscreen wiring
 
@@ -165,9 +172,9 @@ Do this once per controller, with the plates empty.
 3. **Check the motor drivers.** Open the controller's serial console and
    send `?`. Each feeder should show `driver: ready, DIAG in use`. If it
    shows `DIAG NOT used`, that feeder's DIAG jumper is missing.
-4. **Check each beam.** Send `e 1` (beam log on), then block and unblock each
-   beam by hand. You should see `C BEAM broken` / `C BEAM cleared` for the
-   case feeder and `B BEAM ...` for the bullet feeder. If a beam reports
+4. **Check each sensor.** Send `e 1` (beam log on), then block and unblock
+   each sensor by hand. You should see `C BEAM broken` / `C BEAM cleared` for
+   the case feeder and `B BEAM ...` for the bullet feeder. If a sensor reports
    *broken* when you unblock it, select that feeder (`U 0` case, `U 1`
    bullet) and send `N 1`. Send `e 0` when done.
 5. **Check each motor's direction.** Tap **GO** for one feeder and watch the
@@ -207,18 +214,18 @@ The speed starts at 50 % after power-up.
 
 ### What the feeder does on its own
 
-- **Beam hold:** when a part sits at the beam, the motor stops (state
+- **Beam hold:** when a part sits at the sensor, the motor stops (state
   `CASE HOLD` / `ROUND HOLD`) and restarts once the part is taken.
 - **Jams:** when the motor stalls, the feeder reverses for about 2 seconds,
   pauses, then feeds forward again (state `JAM`).
 - **Repeat jam:** if it jams again within 2 seconds of a recovery, it stops
   in **FAULT** with a **STALL** popup and an alarm. Clear the jam, then tap
-  **RESUME**, or break that feeder's beam twice within 2 seconds.
+  **RESUME**, or block that feeder's sensor twice within 2 seconds.
 - **Empty warning:** if nothing has fed for the warning time (30 s by
   default), a popup and a chime say the feeder is empty. It keeps running,
   and the popup clears itself when parts flow again.
 - **Auto shutoff:** after 2 minutes with nothing fed, the feeder stops
-  (`IDLE`). Reload, then tap **RESUME** or break the beam twice.
+  (`IDLE`). Reload, then tap **RESUME** or block the sensor twice.
 - **Driver temperature:** popups warn as a motor driver passes 120, 143,
   150 and 157 °C, and if it shuts itself off. Check the fan.
 
@@ -242,7 +249,7 @@ urgent feeder:
 | Light | Meaning |
 |---|---|
 | green, steady | running |
-| amber, slow blink | part waiting at the beam |
+| amber, slow blink | part waiting at the sensor |
 | orange, fast blink | clearing a jam |
 | blue, blinking | auto shutoff (empty) |
 | red, flickering | FAULT |
@@ -262,7 +269,7 @@ Enter. Feeder commands apply to the **selected** feeder; select it with `U`.
 | `K 1` / `K 2` / `K 3` | machine: case / bullet / dual (every feeder stopped first) |
 | `U 0` / `U 1` | select the case / bullet feeder for the commands below |
 | `R 1` / `R 0` | run / stop the selected feeder |
-| `N 0` / `N 1` | beam reads LOW / HIGH when blocked |
+| `N 0` / `N 1` | sensor reads LOW / HIGH when a part is there |
 | `M 0` / `M 1` | motor direction normal / reversed (feeder stopped) |
 
 ### Advanced (not saved; reset at power-up)
@@ -270,12 +277,12 @@ Enter. Feeder commands apply to the **selected** feeder; select it with `U`.
 | Command | What it does |
 |---|---|
 | `t 1` / `t 0` | telemetry: StallGuard reading, speed and state twice a second |
-| `e 1` / `e 0` | log every beam break and clear |
+| `e 1` / `e 0` | log every sensor block and clear |
 | `j 1` / `j 0` | jam detection on / off |
 | `s <n>` | set every jam threshold of the selected feeder to `n` (trips below `2 x n`) |
 | `v <hz>` / `V <hz>` | maximum / minimum step rate (100 % / 0 % speed) |
-| `b <ms>` / `B <ms>` | beam time before a hold / clear time before resuming |
-| `C <ms>` | beam clear time before the next part counts |
+| `b <ms>` / `B <ms>` | sensor time before a hold / clear time before resuming |
+| `C <ms>` | sensor clear time before the next part counts |
 | `w <ms>` | repeat-jam window (a jam within it is a FAULT) |
 | `W <ms>` | how long a stall must last to count as a jam |
 | `d <ms>` | settle time after speeding up before jams are checked |
@@ -314,7 +321,7 @@ controller.
 | `CHECK DRIVER`, or the LED blinks red once a second | 24 V on; the motor driver could not be configured |
 | Motor buzzes but does not turn | motor coil pairs (see [Motors](#motors)) |
 | Plate turns the wrong way | `M 1` for that feeder |
-| Feeder never holds, or holds all the time | beam wiring; beam polarity (`N 0` / `N 1`); check with `e 1` |
+| Feeder never holds, or holds all the time | sensor wiring; sensor polarity (`N 0` / `N 1`); check with `e 1` |
 | Jams are not detected | `?` shows `DIAG in use`; DIAG jumper fitted |
 | Jams reported that did not happen, or real jams missed | [Adjusting jam detection](#adjusting-jam-detection) |
 | Machine **APPLY** is greyed out | stop every feeder first |
