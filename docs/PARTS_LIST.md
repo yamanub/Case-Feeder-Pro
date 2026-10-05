@@ -27,12 +27,14 @@ case or bullet feeder and twice for a dual setup.
 | NEMA 17 stepper motor, 51:1 gearbox | per feeder | | [Amazon](https://www.amazon.com/dp/B00QEVLDVO) |
 | Shaft coupler | per feeder | | [Amazon](https://www.amazon.com/dp/B08QVKMDC6) |
 
-## Part sensor (one per feeder, either type)
+## Part sensor (one per feeder)
+
+The case feeder works with either type; the bullet feeder uses the TCRT5000.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| TCRT5000 infrared reflective sensor | per feeder | IR sensor: one unit | [Amazon](https://www.amazon.com/dp/B00LZV1V10) |
-| IR break-beam sensor | per feeder | emitter + receiver pair | [Amazon](https://www.amazon.com/dp/B0FPCR98F2) |
+| TCRT5000 infrared reflective sensor | per feeder | IR sensor: one unit. Case or bullet feeder | [Amazon](https://www.amazon.com/dp/B00LZV1V10) |
+| IR break-beam sensor | per case feeder | emitter + receiver pair. Case feeder only | [Amazon](https://www.amazon.com/dp/B0FPCR98F2) |
 
 ## Wiring
 
@@ -59,3 +61,16 @@ Quantities for one case feeder.
 | M3 x 6 mm button head screw | 2 | | |
 | Magnet, 12 x 3 mm | 2 | feeder exit tube assembly | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
 | ABS sheet, 1/16" thick, 24" x 48" | 1 | outer wall of the feeder; cut to fit | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
+
+## Bullet feeder hardware
+
+Quantities for one bullet feeder.
+
+| Part | Qty | Notes | Link |
+|---|---|---|---|
+| M4 x 10 mm screw | 7 | | [Amazon](https://www.amazon.com/dp/B0G19FJ4NV) (assorted lengths) |
+| M4 x 16 mm screw | 6 | | [Amazon](https://www.amazon.com/dp/B0G19FJ4NV) (assorted lengths) |
+| M4 nut | 12 | | [Amazon](https://www.amazon.com/dp/B0F8GGH5GX) |
+| M3 x 12 mm button head screw | 3 | | |
+| M3 x 6 mm button head screw | 3 | | |
+| M3 nut | 3 | | |
