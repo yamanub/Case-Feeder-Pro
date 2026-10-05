@@ -47,6 +47,13 @@ The case feeder works with either type; the bullet feeder uses the TCRT5000.
 | Clip-on ferrite core | 1 | on the touchscreen cable | |
 | USB-C cable | 1 | for flashing both boards | |
 
+## Controller case hardware
+
+| Part | Qty | Notes | Link |
+|---|---|---|---|
+| M3 x 12 mm button head screw | 4 | | |
+| M3 x 4 mm button head screw | 4 | | |
+
 ## Case feeder hardware
 
 Quantities for one case feeder.
