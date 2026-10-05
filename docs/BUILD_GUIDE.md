@@ -43,7 +43,7 @@ firmware, first setup, and day-to-day use. For the parts, see the
 | Case feeder beam receiver | **Y-STOP** (`IO3 / GND / 5V`) | signal to `IO3` |
 | Bullet feeder motor | **E** motor connector | |
 | Bullet feeder beam receiver | **Z-STOP** (`IO25 / GND / 5V`) | signal to `IO25` |
-| Beam emitters | **SERVOS** header, `5V` and `GND` | the emitters only need power; leave the signal pin empty |
+| Beam emitters | any `5V` + `GND` pair, such as the feeder's own STOP connector | the emitters only need power; see [Beam sensors](#beam-sensors) |
 | Touchscreen | **Raspberry Pi UART** header (`5V 5V GND IO1 IO0`) | see [Touchscreen wiring](#touchscreen-wiring) |
 | Driver fan | **FAN1** | a **24 V** fan; FAN1 switches the 24 V input. Required when running two feeders |
 | Status light (optional) | **RGB** header (`GND / IO24 / 5V`) | a WS2812 LED; it mirrors the on-board RGB LED |
@@ -80,7 +80,10 @@ The motor current is fixed in the firmware at 0.95 A.
 ### Beam sensors
 
 Each feeder has one break-beam pair at its outlet. The receiver connects to
-that feeder's STOP connector (signal, GND, 5V). By default the firmware
+that feeder's STOP connector (signal, GND, 5V). The emitter only needs power:
+take `5V` and `GND` from any connector that has them, such as the same STOP
+connector, shared with the receiver. Fan and motor connectors do not carry
+5V. By default the firmware
 expects the receiver's signal to read **LOW while the beam is blocked**;
 sensors that work the other way are set with one command during setup.
 
