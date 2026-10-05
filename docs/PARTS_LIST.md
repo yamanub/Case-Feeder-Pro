@@ -58,4 +58,4 @@ Quantities for one case feeder.
 | M3 x 12 mm button head screw | 6 | | |
 | M3 x 6 mm button head screw | 2 | | |
 | Magnet, 12 x 3 mm | 2 | feeder exit tube assembly | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
-| ABS sheet | as needed | outer wall of the feeder; cut to fit | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
+| ABS sheet, 1/16" thick, 24" x 48" | 1 | outer wall of the feeder; cut to fit | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
