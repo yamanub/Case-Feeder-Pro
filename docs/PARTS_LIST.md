@@ -16,7 +16,7 @@ case or bullet feeder and twice for a dual setup.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| 24 V power supply, 3 to 6 A | 1 | 3 A or more | [Amazon](https://www.amazon.com/dp/B078RY7BPL) |
+| 24 V power supply, 3 to 6 A | 1 | 3 A or more; the linked one is 3 A | [Amazon](https://www.amazon.com/dp/B078RY7BPL) |
 | Power jack | 1 | | [Amazon](https://www.amazon.com/dp/B0D9B7WR23) |
 | Power switch | 1 | | [Amazon](https://www.amazon.com/dp/B07S2QJKTX) |
 
