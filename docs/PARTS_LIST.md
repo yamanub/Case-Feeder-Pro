@@ -45,14 +45,17 @@ case or bullet feeder and twice for a dual setup.
 | Clip-on ferrite core | 1 | on the touchscreen cable | |
 | USB-C cable | 1 | for flashing both boards | |
 
-## Hardware
+## Case feeder hardware
+
+Quantities for one case feeder.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
 | M4 x 10 mm screw | 31 | | [Amazon](https://www.amazon.com/dp/B0G19FJ4NV) (assorted lengths) |
 | M4 x 16 mm screw | 6 | | [Amazon](https://www.amazon.com/dp/B0G19FJ4NV) (assorted lengths) |
 | M4 nut | 24 | | [Amazon](https://www.amazon.com/dp/B0F8GGH5GX) |
-| M4 threaded insert | 11 | | |
-| M3 x 12 mm screw | 6 | | |
-| M3 x 6 mm screw | 2 | | |
+| M4 heat-set insert | 11 | standard | |
+| M3 x 12 mm button head screw | 6 | | |
+| M3 x 6 mm button head screw | 2 | | |
 | Magnet, 12 x 3 mm | 2 | feeder exit tube assembly | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
+| ABS sheet | as needed | outer wall of the feeder; cut to fit | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
