@@ -11,6 +11,18 @@ side by side from one controller, with a touchscreen to control them.
 
 ## The feeders
 
+### Case feeder
+
+<p>
+  <img src="docs/images/case-feeder-assembled.png" width="32%" alt="Case feeder on its stand">
+  <img src="docs/images/case-feeder-hopper.png" width="32%" alt="Case feeder hopper and plate">
+  <img src="docs/images/case-feeder-underside-motor.png" width="32%" alt="Case feeder underside with the 51:1 motor and exit tube">
+</p>
+<p>
+  <img src="docs/images/case-feeder-underside-exit-tube.png" width="32%" alt="Case feeder underside with the exit tube">
+  <img src="docs/images/case-feeder-underside.png" width="32%" alt="Case feeder underside, enclosure closed">
+</p>
+
 ### Bullet feeder
 
 <p>
