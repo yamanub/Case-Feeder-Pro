@@ -88,4 +88,7 @@ pio run -e lcd -t upload
 
 ## License
 
-GNU General Public License v3.0. See [LICENSE](LICENSE).
+- **Firmware and documentation:** GNU General Public License v3.0. See
+  [LICENSE](LICENSE).
+- **3D models (`stl/`):** Creative Commons Attribution-NonCommercial-ShareAlike
+  4.0 (CC BY-NC-SA 4.0). See [stl/LICENSE.md](stl/LICENSE.md).

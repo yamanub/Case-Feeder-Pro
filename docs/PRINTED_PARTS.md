@@ -1,7 +1,9 @@
 # Printed parts
 
 STL files are in [`stl/`](../stl), one folder per assembly. Sizes are the
-part's bounding box in millimetres, as exported.
+part's bounding box in millimetres, as exported. The models are licensed
+under [CC BY-NC-SA 4.0](../stl/LICENSE.md): non-commercial use, with credit,
+and modified versions shared under the same license.
 
 ## Case feeder ([`stl/case-feeder`](../stl/case-feeder))
 
@@ -59,7 +61,7 @@ Funnel exit (choose the one that matches your drop tube):
 | File | Size (mm) | Notes |
 |---|---|---|
 | `Funnel Exit Dillon Tube.stl` | 27 x 30 x 27 | Dillon drop tube |
-| `Funnel Exit PEX 45.stl` | 27 x 38 x 27 | PEX tube |
+| `Funnel Exit PEX.stl` | 27 x 38 x 27 | PEX tube |
 | `Funnel Exit Rollsizer Tube.stl` | 27 x 38 x 27 | Rollsizer tube |
 | `Funnel Exit spring 15mm.stl` | 27 x 41 x 28 | 15 mm spring |
 
