@@ -79,6 +79,7 @@ The largest part is about 220 mm.
 | `Guide.stl` | 51 x 6 x 53 | |
 | `Guide Stop.stl` | 18 x 13 x 35 | |
 | `ABS outer shell Wrap.stl` | 198 x 127 x 193 | shape of the outer wall, cut from 1/16" ABS sheet; not printed |
+| `ABS outer shell Wrap Flat.dxf` | 487 x 127 (flat) | cutting pattern for the outer wall, full size in millimetres, with the 5 screw holes along the bottom edge |
 
 Feeder plate (choose your caliber):
 
