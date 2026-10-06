@@ -66,6 +66,7 @@ Quantities for one case feeder.
 | M4 heat-set insert | 11 | standard | |
 | M3 x 12 mm button head screw | 6 | | |
 | M3 x 6 mm button head screw | 2 | | |
+| 3/4" PEX tubing | about 138 mm | feeder exit tube; cut to the length of `PEX Tube.stl` | |
 | Magnet, 12 x 3 mm | 2 | feeder exit tube assembly | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
 | ABS sheet, 1/16" thick, 24" x 48" | 1 | outer wall of the feeder; cut to fit | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
 | ABS sheet, 3/16" thick (optional) | 1 | to mill the one-piece feeder plate instead of printing the three-piece plate (see [printed parts](PRINTED_PARTS.md)); the reference build milled it from this sheet | |

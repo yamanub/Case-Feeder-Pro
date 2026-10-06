@@ -19,7 +19,7 @@ with a bed of at least **300 x 300 mm**.
 
 | File | Size (mm) | Notes |
 |---|---|---|
-| `Feeder Plate Ramp V7.stl` | 167 x 167 x 6 | |
+| `Feeder Plate Ramp V7.stl` | 167 x 167 x 6 | print 4 |
 
 ### Bowl
 
@@ -35,8 +35,8 @@ with a bed of at least **300 x 300 mm**.
 | File | Size (mm) | Notes |
 |---|---|---|
 | `Base V5 Angle.stl` | 100 x 196 x 196 | |
-| `Base Mount v5 Center.stl` | 100 x 61 x 162 | |
-| `Base Mount v5 Offset.stl` | 100 x 61 x 162 | |
+| `Base Mount v5 Center.stl` | 100 x 61 x 162 | base mount, centered (choose this or Offset) |
+| `Base Mount v5 Offset.stl` | 100 x 61 x 162 | base mount, offset (choose this or Center) |
 | `Table Mount v5.stl` | 100 x 61 x 102 | |
 
 ### Motor coupler
@@ -51,8 +51,8 @@ with a bed of at least **300 x 300 mm**.
 
 | File | Size (mm) | Notes |
 |---|---|---|
-| `Feeder Exit 45.stl` | 77 x 69 x 36 | |
-| `Pex 45.stl` | 22 x 138 x 22 | |
+| `Feeder Exit.stl` | 77 x 69 x 36 | |
+| `PEX Tube.stl` | 22 x 138 x 22 | length guide, not printed: the real part is 3/4" PEX tubing cut to this length (about 138 mm) |
 
 Funnel exit (choose the one that matches your drop tube):
 
@@ -109,6 +109,9 @@ Holds the SKR Pico and the touchscreen.
 | `CFBF Speaker Housing.stl` | 32 x 47 x 13 | |
 
 ## Case arm mount ([`stl/case-arm-mount`](../stl/case-arm-mount))
+
+The arm that attaches the controller case to the case feeder or the bullet
+feeder.
 
 | File | Size (mm) | Notes |
 |---|---|---|
