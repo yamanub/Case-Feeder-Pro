@@ -51,6 +51,23 @@ firmware, first setup, and day-to-day use. For the parts, see the
 Only wire the feeders you have: a case-only build uses X and Y-STOP, a
 bullet-only build uses E and Z-STOP.
 
+### Connectors and cables
+
+The SKR Pico uses **JST-XH (2.54 mm pitch)** connectors: 4-pin on the motor
+ports, 3-pin on the STOP and RGB ports, and 2-pin on FAN1. The Pi UART header
+for the touchscreen is plain 2.54 mm header pins. Most of the parts do not
+come with matching plugs, so plan to make your own cables. A JST-XH kit with
+pre-crimped wires (see the [parts list](PARTS_LIST.md)) avoids the need for a
+crimp tool.
+
+| Part | What it comes with | What to do |
+|---|---|---|
+| Stepper motors | Dupont 2.54 mm plugs | these fit the motor ports; check the coil pairs (see [Motors](#motors)) |
+| Driver fan | 2-pin JST-XH plug | plugs straight into FAN1 |
+| Break-beam sensor | JST-XH plugs; one may be 2-pin | re-pin a 2-pin plug into a 3-pin housing to match the STOP connector |
+| TCRT5000 IR sensor | header pins, no wires | make a 3-wire cable with a 3-pin JST-XH plug for the STOP connector |
+| Touchscreen | a cable with a small 4-pin plug on the screen end, bare wires on the other | fit 2.54 mm female (Dupont) connectors for the Pi UART header; see [Touchscreen wiring](#touchscreen-wiring) |
+
 ### Jumpers
 
 Every board is jumpered the same way, whatever the machine:
