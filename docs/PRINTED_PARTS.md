@@ -31,6 +31,7 @@ with a bed of at least **300 x 300 mm**.
 | `Mid Bowl V5.stl` | 292 x 124 x 128 | |
 | `Right Bowl V5.stl` | 170 x 173 x 207 | |
 | `ABS Outer v5.stl` | 387 x 317 x 420 | shape of the outer wall, cut from 1/16" ABS sheet; not printed |
+| `ABS Outer v5 Flat.dxf` | 932 x 250 (flat) | cutting pattern for the outer wall, full size in millimetres, with the 12 screw holes along the bottom edge |
 
 ### Base and mounting
 
