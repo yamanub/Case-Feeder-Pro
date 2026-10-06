@@ -43,7 +43,7 @@ The case feeder works with either type; the bullet feeder uses the TCRT5000.
 | JST-XH 2.54 mm connector kit, pre-crimped wires | 1 | the SKR Pico uses JST-XH connectors; cables need to be made (see the [build guide](BUILD_GUIDE.md#connectors-and-cables)) | [Amazon](https://www.amazon.com/dp/B0H3WK88ZL) |
 | Motor cable, 4-pin | per feeder | | |
 | Sensor cable, 3-wire | per feeder | | |
-| Touchscreen cable, 4-wire | 1 | 5V, GND, TX, RX; comes with the touchscreen (Dupont connectors on the controller end) | |
+| Touchscreen cable, 4-wire | 1 | 5V, GND, TX, RX; comes with the touchscreen. Re-pin its Dupont end into a 5-pin JST-XH housing for the SKR Pico | |
 | 470 Ω resistor | 2 | one in series with each touchscreen data wire | |
 | Clip-on ferrite core | 1 | on the touchscreen cable | |
 | USB-C cable | 1 | for flashing both boards | |

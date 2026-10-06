@@ -43,7 +43,7 @@ firmware, first setup, and day-to-day use. For the parts, see the
 | Case feeder sensor | **Y-STOP** (`IO3 / GND / 5V`) | see [Part sensors](#part-sensors) |
 | Bullet feeder motor | **E** motor connector | |
 | Bullet feeder sensor | **Z-STOP** (`IO25 / GND / 5V`) | see [Part sensors](#part-sensors) |
-| Touchscreen | **Raspberry Pi UART** header (`5V 5V GND IO1 IO0`) | see [Touchscreen wiring](#touchscreen-wiring) |
+| Touchscreen | **Raspberry Pi UART** connector, 5-pin (`5V 5V GND IO1 IO0`) | see [Touchscreen wiring](#touchscreen-wiring) |
 | Driver fan | **FAN1** | a **24 V** fan; FAN1 switches the 24 V input. Required when running two feeders |
 | Status light (optional) | **RGB** header (`GND / IO24 / 5V`) | a WS2812 LED; it mirrors the on-board RGB LED |
 | USB-C | USB-C socket | flashing and the serial console |
@@ -54,8 +54,8 @@ bullet-only build uses E and Z-STOP.
 ### Connectors and cables
 
 The SKR Pico uses **JST-XH (2.54 mm pitch)** connectors: 4-pin on the motor
-ports, 3-pin on the STOP and RGB ports, and 2-pin on FAN1. The Pi UART header
-for the touchscreen is plain 2.54 mm header pins. Most of the parts do not
+ports, 3-pin on the STOP and RGB ports, 2-pin on FAN1, and 5-pin on the Pi
+UART connector for the touchscreen. Most of the parts do not
 come with matching plugs, so plan to make your own cables. A JST-XH kit with
 pre-crimped wires (see the [parts list](PARTS_LIST.md)) avoids the need for a
 crimp tool.
@@ -66,7 +66,7 @@ crimp tool.
 | Driver fan | 2-pin JST-XH plug | plugs straight into FAN1 |
 | Break-beam sensor | JST-XH plugs; one may be 2-pin | re-pin a 2-pin plug into a 3-pin housing to match the STOP connector |
 | TCRT5000 IR sensor | header pins, no wires | make a 3-wire cable with a 3-pin JST-XH plug for the STOP connector |
-| Touchscreen | a cable with a small 4-pin plug on the screen end and Dupont connectors on the other | the Dupont end fits the Pi UART header; add the series resistors (see [Touchscreen wiring](#touchscreen-wiring)) |
+| Touchscreen | a cable with a small 4-pin plug on the screen end and Dupont connectors on the other | re-pin the Dupont end into a 5-pin JST-XH housing for the Pi UART connector (one `5V` position stays empty), and add the series resistors (see [Touchscreen wiring](#touchscreen-wiring)) |
 
 ### Jumpers
 
@@ -114,7 +114,7 @@ there**. A sensor that works the other way is set with one command during
 
 ## Touchscreen wiring
 
-| SKR Pico Pi UART header | Touchscreen UART connector |
+| SKR Pico Pi UART connector | Touchscreen UART connector |
 |---|---|
 | `5V` | `5V` |
 | `GND` | `GND` |
