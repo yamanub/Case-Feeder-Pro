@@ -68,7 +68,7 @@ Quantities for one case feeder.
 | M3 x 6 mm button head screw | 2 | | |
 | Magnet, 12 x 3 mm | 2 | feeder exit tube assembly | [Amazon](https://www.amazon.com/dp/B0CCVPVQ1L) |
 | ABS sheet, 1/16" thick, 24" x 48" | 1 | outer wall of the feeder; cut to fit | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
-| ABS sheet, 3/16" thick (optional) | 1 | to mill the feeder plate instead of printing it. The plate is large and may not fit a standard print bed; the reference build milled it from this sheet | |
+| ABS sheet, 3/16" thick (optional) | 1 | to mill the feeder plate instead of printing it. The plate is 335 mm across, so printing it in one piece needs a bed of at least 340 x 340 mm; the reference build milled it from this sheet | |
 
 ## Bullet feeder hardware
 
