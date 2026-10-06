@@ -65,6 +65,7 @@ power jack and driver fan on its end panel.
 - [Build guide](docs/BUILD_GUIDE.md): wiring, flashing, first setup and
   daily use.
 - [Parts list](docs/PARTS_LIST.md)
+- [Printed parts](docs/PRINTED_PARTS.md): STL files for the feeders and the controller case
 
 Both firmware images build with [PlatformIO](https://platformio.org/):
 
@@ -82,7 +83,8 @@ pio run -e lcd -t upload
 | `src/feeder_protocol.h` | the UART protocol shared by both |
 | `src/*.h` | display, touch, audio and LVGL configuration for the touchscreen |
 | `lib/FT6336/` | touch controller driver |
-| `docs/` | build guide and parts list |
+| `docs/` | build guide, parts list and printed parts |
+| `stl/` | 3D-printable parts, one folder per assembly |
 
 ## License
 
