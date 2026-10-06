@@ -84,3 +84,7 @@ Quantities for one bullet feeder.
 | M3 x 6 mm button head screw | 3 | | |
 | M3 nut | 3 | | |
 | ABS sheet, 1/16" thick, 24" x 48" | 1 | outer wall of the feeder; cut from `ABS outer shell Wrap Flat.dxf` (487 x 127 mm) | [Amazon](https://www.amazon.com/dp/B0C7QG8463) |
+
+The two outer walls together use about 932 x 250 mm plus 487 x 127 mm, so
+one 24" x 48" ABS sheet covers both the case feeder and the bullet feeder,
+with room to spare. A dual build needs only one sheet.
