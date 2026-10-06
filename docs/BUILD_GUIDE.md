@@ -66,7 +66,7 @@ crimp tool.
 | Driver fan | 2-pin JST-XH plug | plugs straight into FAN1 |
 | Break-beam sensor | JST-XH plugs; one may be 2-pin | re-pin a 2-pin plug into a 3-pin housing to match the STOP connector |
 | TCRT5000 IR sensor | header pins, no wires | make a 3-wire cable with a 3-pin JST-XH plug for the STOP connector |
-| Touchscreen | a cable with a small 4-pin plug on the screen end, bare wires on the other | fit 2.54 mm female (Dupont) connectors for the Pi UART header; see [Touchscreen wiring](#touchscreen-wiring) |
+| Touchscreen | a cable with a small 4-pin plug on the screen end and Dupont connectors on the other | the Dupont end fits the Pi UART header; add the series resistors (see [Touchscreen wiring](#touchscreen-wiring)) |
 
 ### Jumpers
 
