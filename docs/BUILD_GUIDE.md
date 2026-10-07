@@ -142,7 +142,9 @@ Commands below are run in the PlatformIO terminal from the repository folder.
 
 ### Controller (SKR Pico)
 
-1. Connect the SKR Pico to the computer with USB-C.
+1. Connect the SKR Pico to the computer with USB-C. **Unplug the
+   touchscreen's USB cable** while you do this: with both boards connected,
+   the upload can send its reset to the touchscreen instead of the SKR Pico.
 2. **First flash only:** fit the **BOOT** jumper and press the reset button.
    The board appears as a USB drive named `RPI-RP2`.
 3. Run:
