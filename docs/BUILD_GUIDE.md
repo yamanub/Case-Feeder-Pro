@@ -96,8 +96,8 @@ The motor current is fixed in the firmware at 0.95 A.
 ### Part sensors
 
 Each feeder has one sensor at its outlet that sees each part go by. Two
-types work; both are 3-wire 5 V sensors. The case feeder can use either;
-the bullet feeder uses the IR sensor.
+types are used; both are 3-wire 5 V sensors. The case feeder uses the
+break-beam sensor; the bullet feeder uses the IR sensor.
 
 | Sensor type | Wiring to the feeder's STOP connector |
 |---|---|

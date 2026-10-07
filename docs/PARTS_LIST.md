@@ -25,15 +25,15 @@ case or bullet feeder and twice for a dual setup.
 | Part | Qty | Notes | Link |
 |---|---|---|---|
 | NEMA 17 stepper motor, 51:1 gearbox | per feeder | | [Amazon](https://www.amazon.com/dp/B00QEVLDVO) |
-| Shaft coupler | per feeder | only half of one coupler is used per feeder | [Amazon](https://www.amazon.com/dp/B08QVKMDC6) |
+| Shaft coupler | 1 | only half of a coupler is used per feeder, so one coupler covers a dual build | [Amazon](https://www.amazon.com/dp/B08QVKMDC6) |
 
 ## Part sensor (one per feeder)
 
-The case feeder works with either type; the bullet feeder uses the TCRT5000.
+The case feeder uses the break-beam sensor; the bullet feeder uses the TCRT5000.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| TCRT5000 infrared reflective sensor | per feeder | IR sensor: one unit. Case or bullet feeder | [Amazon](https://www.amazon.com/dp/B00LZV1V10) |
+| TCRT5000 infrared reflective sensor | per bullet feeder | IR sensor: one unit. Bullet feeder only | [Amazon](https://www.amazon.com/dp/B00LZV1V10) |
 | IR break-beam sensor | per case feeder | emitter + receiver pair. Case feeder only | [Amazon](https://www.amazon.com/dp/B0FPCR98F2) |
 
 ## Wiring
