@@ -25,7 +25,7 @@ case or bullet feeder and twice for a dual setup.
 | Part | Qty | Notes | Link |
 |---|---|---|---|
 | NEMA 17 stepper motor, 51:1 gearbox | per feeder | | [Amazon](https://www.amazon.com/dp/B00QEVLDVO) |
-| Shaft coupler | per feeder | | [Amazon](https://www.amazon.com/dp/B08QVKMDC6) |
+| Shaft coupler | per feeder | only half of one coupler is used per feeder | [Amazon](https://www.amazon.com/dp/B08QVKMDC6) |
 
 ## Part sensor (one per feeder)
 
