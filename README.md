@@ -84,11 +84,11 @@ pio run -e lcd -t upload
 | `src/*.h` | display, touch, audio and LVGL configuration for the touchscreen |
 | `lib/FT6336/` | touch controller driver |
 | `docs/` | build guide, parts list and printed parts |
-| `stl/` | 3D-printable parts, one folder per assembly |
+| `stl/` | 3D-printable parts plus DXF and STEP files for cut and machined parts, one folder per assembly |
 
 ## License
 
 - **Firmware and documentation:** GNU General Public License v3.0. See
   [LICENSE](LICENSE).
-- **3D models (`stl/`):** Creative Commons Attribution-NonCommercial-ShareAlike
+- **3D models and CAD files (`stl/`):** Creative Commons Attribution-NonCommercial-ShareAlike
   4.0 (CC BY-NC-SA 4.0). See [stl/LICENSE.md](stl/LICENSE.md).

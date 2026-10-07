@@ -1,6 +1,7 @@
 # Printed parts
 
-STL files are in [`stl/`](../stl), one folder per assembly. Sizes are the
+STL files (and the DXF and STEP files for cut and machined parts) are in
+[`stl/`](../stl), one folder per assembly. Sizes are the
 part's bounding box in millimetres, as exported. The models are licensed
 under [CC BY-NC-SA 4.0](../stl/LICENSE.md): non-commercial use, with credit,
 and modified versions shared under the same license.
@@ -18,18 +19,32 @@ with a bed of at least **300 x 300 mm**.
 | `Feeder Plate Printed 2.stl` | 166 x 268 x 14 | printed plate, section 2 of 3 |
 | `Feeder Plate Printed 3.stl` | 179 x 226 x 14 | printed plate, section 3 of 3 |
 | `ABS Feeder Plate Milled.stl` | 334 x 334 x 4.4 | one-piece plate, milled from 3/16" ABS sheet (see the [parts list](PARTS_LIST.md)) |
+| `ABS Feeder Plate Milled.step` | 334 x 334 x 4.4 | the same one-piece plate as a STEP model, for CNC machining |
 
 | File | Size (mm) | Notes |
 |---|---|---|
 | `Feeder Plate Ramp V7.stl` | 167 x 167 x 6 | print 4 |
 
-### Bowl
+### Bowl (choose one)
+
+Three-piece bowl, fits a 300 x 300 mm bed:
 
 | File | Size (mm) | Notes |
 |---|---|---|
 | `Left Bowl V5.stl` | 170 x 202 x 173 | |
 | `Mid Bowl V5.stl` | 292 x 124 x 128 | |
 | `Right Bowl V5.stl` | 170 x 173 x 207 | |
+
+One-piece bowl, for large-format printers:
+
+| File | Size (mm) | Notes |
+|---|---|---|
+| `1 piece Bowl.stl` | 337 x 255 x 252 | replaces the three bowl pieces |
+
+Outer wall (either bowl):
+
+| File | Size (mm) | Notes |
+|---|---|---|
 | `ABS Outer v5.stl` | 387 x 317 x 420 | shape of the outer wall, cut from 1/16" ABS sheet; not printed |
 | `ABS Outer v5 Flat.dxf` | 932 x 250 (flat) | cutting pattern for the outer wall, full size in millimetres, with the 12 screw holes along the bottom edge |
 
