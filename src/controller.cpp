@@ -121,9 +121,11 @@ struct PersistData {
     uint8_t  beamActiveHigh[NUM_FEEDERS];
     uint8_t  motorReversed[NUM_FEEDERS];
     uint16_t warnSeconds[NUM_FEEDERS];
+    uint8_t  speedPercent[NUM_FEEDERS];    // last speed, restored at power-up
 };
+static constexpr uint8_t  DEFAULT_SPEED_PERCENT = 60;   // a new board; one of the LCD presets
 static constexpr uint32_t PERSIST_MAGIC   = 0x31524446u;   // "FDR1"
-static constexpr uint16_t PERSIST_VERSION = 1;
+static constexpr uint16_t PERSIST_VERSION = 2;
 static PersistData persist;
 static PersistData persistSaved;
 
@@ -132,7 +134,10 @@ static void persistDefaults() {
     persist.magic       = PERSIST_MAGIC;
     persist.version     = PERSIST_VERSION;
     persist.machineMask = MACHINE_DUAL;    // a new board shows both; pick on the LCD
-    for (uint8_t i = 0; i < NUM_FEEDERS; i++) persist.warnSeconds[i] = 30;
+    for (uint8_t i = 0; i < NUM_FEEDERS; i++) {
+        persist.warnSeconds[i]  = 30;
+        persist.speedPercent[i] = DEFAULT_SPEED_PERCENT;
+    }
 }
 
 // Each write erases a flash sector (~50 ms, interrupts off), so save only
@@ -277,7 +282,7 @@ static void feederInit(Feeder& f, uint8_t index, const FeederConfig* cfg, TMC220
     f.useSlowStart = true;
     f.dirForward = true;
     f.appliedDirLevel = -1;
-    f.speedPercent = 50;
+    f.speedPercent = DEFAULT_SPEED_PERCENT;
     f.beamActiveLow = true;
     f.countArmed = true;
     f.jamDetect = true;
@@ -583,6 +588,8 @@ static void handleCommand(uint8_t command, const uint8_t* payload, uint8_t lengt
             const int t = target(1);
             if (t >= 0 && payload[0] <= 100) {
                 feeders[t].speedPercent = payload[0];
+                persist.speedPercent[t] = payload[0];
+                persistSave();          // only writes when the value changed
                 writeFrame(RSP_ACK, &command, 1);
             } else writeFrame(RSP_NAK, &command, 1);
             break;
@@ -1258,6 +1265,8 @@ void setup() {
         f.beamActiveLow = persist.beamActiveHigh[f.index] == 0;
         f.motorReversed = persist.motorReversed[f.index] != 0;
         f.idleWarnMs    = (uint32_t)persist.warnSeconds[f.index] * 1000UL;
+        const uint8_t sp = persist.speedPercent[f.index];
+        f.speedPercent  = (sp >= 1 && sp <= 100) ? sp : DEFAULT_SPEED_PERCENT;
         setDirection(f, true);
     }
 

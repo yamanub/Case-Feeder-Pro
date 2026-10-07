@@ -203,8 +203,8 @@ Do this once per controller, with the plates empty.
    again. Hold it again straight away: it should stop with a **STALL** popup
    and an alarm. Tap **RESUME**.
 
-The machine, beam polarity, motor direction and empty-warning times are
-saved on the controller. Alerts, volume, screen flip and the last screen
+The machine, beam polarity, motor direction, feed speeds and empty-warning
+times are saved on the controller. Alerts, volume, screen flip and the last screen
 layout are saved on the touchscreen.
 
 ## Using the feeder
@@ -228,7 +228,8 @@ to reset) and its own **GO / STOP**. The top bar shows the board
 temperature and Settings; the bottom bar shows the link and the most urgent
 message from either feeder. Popups name the feeder they belong to.
 
-The speed starts at 50 % after power-up.
+Each feeder remembers its last speed and starts there after power-up (60 %
+on a new controller).
 
 ### What the feeder does on its own
 
