@@ -138,4 +138,4 @@ feeder.
 | `Arm - NutSide.stl` | 42 x 15 x 15 | |
 | `Ball End.stl` | 18 x 20 x 18 | |
 | `Ball Nut.stl` | 30 x 12 x 30 | |
-| `Screw Attachment.stl` | 23 x 13 x 23 | |
+| `Screw Attachment.stl` | 23 x 13 x 23 | the LCD mount: attaches the case arm to the feeder |
