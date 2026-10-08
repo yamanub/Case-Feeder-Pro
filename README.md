@@ -43,6 +43,20 @@ power jack and driver fan on its end panel.
   <img src="docs/images/controller-case-bottom.png" width="24%" alt="Controller case, bottom with mounting slots">
 </p>
 
+### Exploded views
+
+How the printed parts go together. The case feeder is shown with and without
+its ABS outer wall; see [printed parts](docs/PRINTED_PARTS.md) for every file.
+
+<p>
+  <img src="docs/images/exploded-case-feeder.png" width="49%" alt="Case feeder exploded view: outer wall, plate sections, ramps, coupler, bowl floor, base, stand and exit">
+  <img src="docs/images/exploded-case-feeder-no-wall.png" width="49%" alt="Case feeder exploded view without the outer wall">
+</p>
+<p>
+  <img src="docs/images/exploded-bullet-feeder.png" width="49%" alt="Bullet feeder exploded view: outer shell, plate, ramp and guides, main body, base and die bracket">
+  <img src="docs/images/exploded-controller-case.png" width="49%" alt="Controller case exploded view: lids, sides, end caps and speaker housing">
+</p>
+
 ## Features
 
 - **One firmware, three machines:** case feeder, bullet feeder, or dual

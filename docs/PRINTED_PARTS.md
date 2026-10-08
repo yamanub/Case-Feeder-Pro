@@ -8,6 +8,8 @@ and modified versions shared under the same license.
 
 ## Case feeder ([`stl/case-feeder`](../stl/case-feeder))
 
+![Case feeder exploded view](images/exploded-case-feeder-no-wall.png)
+
 The largest parts are about 292 mm long, so the case feeder needs a printer
 with a bed of at least **300 x 300 mm**.
 
@@ -83,6 +85,8 @@ Funnel exit (choose the one that matches your drop tube):
 
 ## Bullet feeder ([`stl/bullet-feeder`](../stl/bullet-feeder))
 
+![Bullet feeder exploded view](images/exploded-bullet-feeder.png)
+
 The largest part is about 220 mm.
 
 | File | Size (mm) | Notes |
@@ -115,6 +119,8 @@ Die bracket and cover (choose your press and caliber):
 
 ## Controller case ([`stl/controller-case`](../stl/controller-case))
 
+![Controller case exploded view](images/exploded-controller-case.png)
+
 Holds the SKR Pico and the touchscreen.
 
 | File | Size (mm) | Notes |
@@ -138,4 +144,4 @@ feeder.
 | `Arm - NutSide.stl` | 42 x 15 x 15 | |
 | `Ball End.stl` | 18 x 20 x 18 | |
 | `Ball Nut.stl` | 30 x 12 x 30 | |
-| `Screw Attachment.stl` | 23 x 13 x 23 | the LCD mount: attaches the case arm to the feeder |
+| `Screw Attachment.stl` | 23 x 13 x 23 | attaches the case arm to the feeder |
