@@ -48,6 +48,10 @@ power jack and driver fan on its end panel.
 How the printed parts go together. The case feeder is shown with and without
 its ABS outer wall; see [printed parts](docs/PRINTED_PARTS.md) for every file.
 
+To turn them around and pull the parts apart yourself, open the
+**[interactive 3D viewer](https://yamanub.github.io/Case-Feeder-Pro/viewer/)**
+(the page is [`docs/viewer/`](docs/viewer/index.html) in this repository).
+
 <p>
   <img src="docs/images/exploded-case-feeder.png" width="49%" alt="Case feeder exploded view: outer wall, plate sections, ramps, coupler, bowl floor, base, stand and exit">
   <img src="docs/images/exploded-case-feeder-no-wall.png" width="49%" alt="Case feeder exploded view without the outer wall">
@@ -97,12 +101,13 @@ pio run -e lcd -t upload
 | `src/feeder_protocol.h` | the UART protocol shared by both |
 | `src/*.h` | display, touch, audio and LVGL configuration for the touchscreen |
 | `lib/FT6336/` | touch controller driver |
-| `docs/` | build guide, parts list and printed parts |
+| `docs/` | build guide, parts list, printed parts, and the 3D viewer (`docs/viewer/`) |
 | `stl/` | 3D-printable parts plus DXF and STEP files for cut and machined parts, one folder per assembly |
 
 ## License
 
 - **Firmware and documentation:** GNU General Public License v3.0. See
   [LICENSE](LICENSE).
-- **3D models and CAD files (`stl/`):** Creative Commons Attribution-NonCommercial-ShareAlike
-  4.0 (CC BY-NC-SA 4.0). See [stl/LICENSE.md](stl/LICENSE.md).
+- **3D models and CAD files (`stl/`, and the viewer's copies in `docs/viewer/models/`):**
+  Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0).
+  See [stl/LICENSE.md](stl/LICENSE.md).

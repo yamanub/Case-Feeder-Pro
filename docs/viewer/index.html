@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Case Feeder Pro Exploded View</title>
+<!-- Case Feeder Pro exploded viewer. Code: GPL-3.0. Models: CC BY-NC-SA 4.0 (see ../../stl/LICENSE.md). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+/* Layout: one-screen shop tool. Header with assembly tabs, the 3D stage
+   filling the screen, a control dock along the bottom, and a parts list
+   docked right on wide screens and below the stage on phones. */
+:root {
+  --bg: #e9ecf0;          /* bench grey with a cool steel bias */
+  --panel: #f6f7f9;
+  --stage: #dfe3e9;
+  --ink: #16191f;
+  --muted: #5b6370;
+  --line: #c9cfd8;
+  --accent: #2a3bd0;      /* the build's printed-part blue */
+  --accent-ink: #ffffff;
+  --red: #c4302b;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14171c; --panel: #1b1f26; --stage: #232831; --ink: #e6e9ee; --muted: #98a1ae;
+    --line: #2e3540; --accent: #6f7dff; --accent-ink: #0d1020; --red: #ef5a52; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14171c; --panel: #1b1f26; --stage: #232831; --ink: #e6e9ee; --muted: #98a1ae;
+  --line: #2e3540; --accent: #6f7dff; --accent-ink: #0d1020; --red: #ef5a52; color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+header {
+  display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap;
+  padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel);
+}
+h1 {
+  margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 1.45rem;
+  letter-spacing: 0.02em; text-transform: uppercase; text-wrap: balance;
+}
+h1 span { color: var(--accent); }
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.tab {
+  font: 600 0.95rem var(--font-display); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); background: transparent; border: 1px solid transparent;
+  padding: 6px 12px; border-radius: 4px; cursor: pointer;
+}
+.tab:hover { color: var(--ink); border-color: var(--line); }
+.tab[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); }
+.tab:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 280px; }
+.stage { position: relative; min-width: 0; min-height: 0; background: var(--stage); }
+#canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.status {
+  position: absolute; left: 16px; top: 12px; font: 400 0.8rem var(--font-mono); color: var(--muted);
+  pointer-events: none;
+}
+.hint {
+  position: absolute; right: 16px; top: 12px; font: 400 0.75rem var(--font-mono); color: var(--muted);
+  pointer-events: none; text-align: right;
+}
+aside {
+  border-left: 1px solid var(--line); background: var(--panel); overflow-y: auto; min-width: 0;
+  padding-block: 14px; padding-inline: 16px;
+}
+aside h2 {
+  margin: 0 0 4px; font: 600 0.8rem var(--font-display); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+}
+.note { margin: 0 0 12px; color: var(--muted); font-size: 0.85rem; line-height: 1.45; }
+.parts { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.parts li {
+  display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 5px 0; border-bottom: 1px dashed var(--line); font-size: 0.86rem;
+}
+.parts li:last-child { border-bottom: 0; }
+.swatch { width: 12px; height: 12px; border-radius: 2px; border: 1px solid var(--line); }
+.pname { overflow-wrap: anywhere; }
+.qty { font: 400 0.75rem var(--font-mono); color: var(--muted); }
+.dock {
+  display: flex; align-items: center; gap: 12px 22px; flex-wrap: wrap;
+  padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line); background: var(--panel);
+}
+.control { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.control label, .readout { font: 600 0.8rem var(--font-display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.readout { font-family: var(--font-mono); letter-spacing: 0; text-transform: none; min-width: 3.5em; color: var(--ink); font-variant-numeric: tabular-nums; }
+#explode { width: min(320px, 52vw); accent-color: var(--accent); }
+.check { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer; }
+.check input { accent-color: var(--accent); width: 16px; height: 16px; }
+.btn {
+  font: 600 0.85rem var(--font-display); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 4px;
+  padding: 6px 12px; cursor: pointer;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 760px) {
+  body { overflow: auto; }
+  main { grid-template-columns: minmax(0, 1fr); grid-template-rows: 62vh auto; }
+  aside { border-left: 0; border-top: 1px solid var(--line); }
+  .hint { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><a href="https://github.com/yamanub/Case-Feeder-Pro" style="color: inherit; text-decoration: none;">Case Feeder Pro</a> <span>Exploded</span></h1>
+  <div class="tabs" role="tablist" aria-label="Assembly">
+    <button class="tab" role="tab" id="tab-case" data-model="case" aria-selected="true">Case feeder</button>
+    <button class="tab" role="tab" id="tab-bullet" data-model="bullet" aria-selected="false">Bullet feeder</button>
+    <button class="tab" role="tab" id="tab-controller" data-model="controller" aria-selected="false">Controller case</button>
+  </div>
+</header>
+
+<main>
+  <div class="stage">
+    <canvas id="canvas" aria-label="3D exploded view of the selected assembly"></canvas>
+    <div class="status" id="status">Loading parts&hellip;</div>
+    <div class="hint">drag to rotate &middot; scroll to zoom &middot; right-drag to pan</div>
+  </div>
+  <aside>
+    <h2 id="parts-title">Parts shown</h2>
+    <p class="note" id="parts-note"></p>
+    <ul class="parts" id="parts"></ul>
+  </aside>
+</main>
+
+<div class="dock">
+  <div class="control">
+    <label for="explode">Explode</label>
+    <input type="range" id="explode" min="0" max="100" value="70">
+    <span class="readout" id="explode-val">70%</span>
+  </div>
+  <label class="check" for="wall"><input type="checkbox" id="wall" checked> Outer wall</label>
+  <label class="check" for="edges"><input type="checkbox" id="edges" checked> Edges</label>
+  <label class="check" for="spin"><input type="checkbox" id="spin"> Turntable</label>
+  <button class="btn" id="reset" type="button">Reset view</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  // Part colours follow the reference renders: black shell, red plates, blue printed parts.
+  const COL = { black: 0x2c3038, dark: 0x454b55, red: 0xc4302b, blue: 0x2a3bd0, grey: 0x8a919c };
+
+  // e: explode direction in units of `step` mm, in the model's own frame.
+  // radial: extra push away from the shaft (case feeder only).
+  // wall: hidden by the "Outer wall" switch. rotZ: copies rotated about the shaft.
+  const MODELS = {
+    case: {
+      dir: "models/case/", step: 95, up: "z", azimuth: 35, elevation: 28,
+      note: "Shown with the 3-piece plate and bowl, the centred base mount and the PEX funnel exit. The stand and base sit at the feeder's working tilt.",
+      parts: [
+        { f: "outer.stl", n: "ABS Outer v5 (cut from 1/16\" ABS)", c: "black", e: [0, 0, 4.1], wall: true },
+        { f: "coupler-handle.stl", n: "Coupler Attachment Handle", c: "red", e: [0, 0, 2.5] },
+        { f: "coupler-top.stl", n: "Coupler Attachment Top V7", c: "dark", e: [0, 0, 2.0] },
+        { f: "ramp.stl", n: "Feeder Plate Ramp V7", c: "blue", e: [0, 0, 1.45], radial: 0.18, rotZ: [0, 90, 180, 270] },
+        { f: "plate-1.stl", n: "Feeder Plate Printed 1", c: "red", e: [0, 0, 0.9], radial: 0.2 },
+        { f: "plate-2.stl", n: "Feeder Plate Printed 2", c: "red", e: [0, 0, 0.9], radial: 0.2 },
+        { f: "plate-3.stl", n: "Feeder Plate Printed 3", c: "red", e: [0, 0, 0.9], radial: 0.2 },
+        { f: "coupler-bottom.stl", n: "Coupler Attachment Bottom V7", c: "dark", e: [0, 0, 0.4] },
+        { f: "bowl-left.stl", n: "Left Bowl V5", c: "blue", e: [0, 0, -0.35], radial: 0.3 },
+        { f: "bowl-mid.stl", n: "Mid Bowl V5", c: "blue", e: [0, 0, -0.35], radial: 0.3 },
+        { f: "bowl-right.stl", n: "Right Bowl V5", c: "blue", e: [0, 0, -0.35], radial: 0.3 },
+        { f: "base-angle.stl", n: "Base V5 Angle", c: "black", e: [0, 0, -1.3] },
+        { f: "base-mount.stl", n: "Base Mount v5 Center", c: "blue", e: [0, 0, -2.2] },
+        { f: "table-mount.stl", n: "Table Mount v5", c: "blue", e: [0, 0, -3.1] },
+        { f: "exit.stl", n: "Feeder Exit", c: "black", e: [0, 0, -0.5], radial: 1.1, toward: -53 },
+        { f: "pex.stl", n: "PEX Tube (3/4\" PEX, cut to length)", c: "red", e: [0, 0, -0.9], radial: 1.1, toward: -53 },
+        { f: "funnel.stl", n: "Funnel Exit PEX", c: "blue", e: [0, 0, -1.3], radial: 1.1, toward: -53 }
+      ]
+    },
+    bullet: {
+      dir: "models/bullet/", step: 70, up: "y", azimuth: -60, elevation: 25,
+      note: "Shown with the 9 mm plate and the Dillon 9 mm die bracket.",
+      parts: [
+        { f: "abs-outer-shell-wrap.stl", n: "ABS outer shell Wrap (cut from 1/16\" ABS)", c: "black", e: [0, 2.6, 0], wall: true },
+        { f: "feeder-plate-9mm.stl", n: "Feeder Plate 9mm", c: "red", e: [0, 1.5, 0] },
+        { f: "guide-stop.stl", n: "Guide Stop", c: "blue", e: [0.45, 0.8, 0.2] },
+        { f: "guide.stl", n: "Guide", c: "blue", e: [0, 0.8, 0.2] },
+        { f: "ramp.stl", n: "Ramp", c: "blue", e: [-0.45, 0.8, 0.2] },
+        { f: "main-body.stl", n: "Main Body", c: "blue", e: [0, 0, 0] },
+        { f: "base-spring-connector.stl", n: "Base Spring Connector", c: "dark", e: [-0.7, -0.9, 0] },
+        { f: "base-mount.stl", n: "Base Mount", c: "black", e: [0, -1.5, 0] },
+        { f: "dillon-die-bracket-9.stl", n: "Dillon Die Bracket 9", c: "blue", e: [-1.3, -0.6, 0] },
+        { f: "die-bracket-cover-9.stl", n: "Die Bracket Cover 9", c: "dark", e: [-2.0, -0.6, 0] }
+      ]
+    },
+    controller: {
+      dir: "models/controller/", step: 48, up: "z", azimuth: -55, elevation: 32,
+      note: "The touchscreen mounts in the LCD lid; the SKR Pico mounts on the Pico lid.",
+      parts: [
+        { f: "cfbf-speaker-housing.stl", n: "CFBF Speaker Housing", c: "dark", e: [0, 0, 2.1] },
+        { f: "cfbf-lcd-lid.stl", n: "CFBF LCD Lid", c: "blue", e: [0, 0, 1.1] },
+        { f: "cfbf-center-side-1.stl", n: "CFBF Center Side 1", c: "black", e: [0, 1, 0] },
+        { f: "cfbf-center-side-2.stl", n: "CFBF Center Side 2", c: "black", e: [0, -1, 0] },
+        { f: "cfbf-top-cap.stl", n: "CFBF Top Cap", c: "black", e: [1.1, 0, 0] },
+        { f: "cfbf-bottom-cap.stl", n: "CFBF Bottom Cap", c: "black", e: [-1.1, 0, 0] },
+        { f: "cfbf-pico-lid.stl", n: "CFBF Pico Lid", c: "blue", e: [0, 0, -1.1] }
+      ]
+    }
+  };
+
+  const canvas = document.getElementById("canvas");
+  const statusEl = document.getElementById("status");
+  const explodeEl = document.getElementById("explode");
+  const explodeVal = document.getElementById("explode-val");
+  const wallEl = document.getElementById("wall");
+  const edgesEl = document.getElementById("edges");
+  const spinEl = document.getElementById("spin");
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 1, 20000);
+  camera.up.set(0, 0, 1);
+  const controls = new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f99, 0.75));
+  const key = new THREE.DirectionalLight(0xffffff, 0.75); key.position.set(1, -1.4, 2); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.35); rim.position.set(-1.5, 1.2, 0.6); scene.add(rim);
+
+  const loader = new THREE.STLLoader();
+  const cache = {};          // file -> BufferGeometry
+  let current = null;        // { key, root, items: [...] }
+
+  function stageBg() {
+    return new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue("--stage").trim() || "#dfe3e9");
+  }
+  function edgeColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#16191f";
+  }
+
+  function load(url) {
+    if (cache[url]) return Promise.resolve(cache[url]);
+    return new Promise((resolve, reject) => loader.load(url, g => { cache[url] = g; resolve(g); }, undefined,
+      () => reject(new Error(url))));
+  }
+
+  async function show(key) {
+    const def = MODELS[key];
+    document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.model === key)));
+    statusEl.textContent = "Loading parts…";
+    if (current) { scene.remove(current.root); current = null; }
+    try { localStorage.setItem("cfp-exploded-tab", key); } catch (e) { /* storage blocked */ }
+
+    const root = new THREE.Group();
+    if (def.up === "y") root.rotation.x = Math.PI / 2;   // the bullet feeder's shaft runs along +Y
+    const items = [];
+    let done = 0;
+    const list = document.getElementById("parts");
+    list.innerHTML = "";
+    document.getElementById("parts-note").textContent = def.note;
+
+    await Promise.all(def.parts.map(async p => {
+      const geo = await load(def.dir + p.f);
+      const angles = p.rotZ || [0];
+      for (const a of angles) {
+        const g = a ? geo.clone().rotateZ(a * Math.PI / 180) : geo;
+        g.computeBoundingBox();
+        const center = new THREE.Vector3(); g.boundingBox.getCenter(center);
+        const mat = new THREE.MeshStandardMaterial({ color: COL[p.c], roughness: 0.62, metalness: 0.05, flatShading: true });
+        const mesh = new THREE.Mesh(g, mat);
+        const edges = new THREE.LineSegments(new THREE.EdgesGeometry(g, 28),
+          new THREE.LineBasicMaterial({ color: edgeColor(), transparent: true, opacity: 0.35 }));
+        mesh.add(edges);
+        root.add(mesh);
+        // explode vector in model units
+        const v = new THREE.Vector3(p.e[0], p.e[1], p.e[2]).multiplyScalar(def.step);
+        if (p.radial) {
+          // push away from the shaft: toward a fixed bearing, or the part's own direction
+          const r = p.toward !== undefined
+            ? new THREE.Vector3(Math.cos(p.toward * Math.PI / 180), Math.sin(p.toward * Math.PI / 180), 0)
+            : new THREE.Vector3(center.x, center.y, 0);
+          if (r.lengthSq() > 1e-6) v.add(r.normalize().multiplyScalar(p.radial * def.step));
+        }
+        items.push({ mesh, edges, v, wall: !!p.wall });
+      }
+      done++;
+      statusEl.textContent = `Loading parts… ${done}/${def.parts.length}`;
+    }));
+
+    def.parts.forEach(p => {
+      const li = document.createElement("li");
+      const sw = document.createElement("span"); sw.className = "swatch";
+      sw.style.background = "#" + COL[p.c].toString(16).padStart(6, "0");
+      const nm = document.createElement("span"); nm.className = "pname"; nm.textContent = p.n;
+      const q = document.createElement("span"); q.className = "qty"; q.textContent = p.rotZ ? "×" + p.rotZ.length : "";
+      li.append(sw, nm, q); list.append(li);
+    });
+
+    scene.add(root);
+    current = { key, root, items, def };
+    applyState();
+    frame();
+    statusEl.textContent = `${def.parts.length} parts`;
+  }
+
+  function applyState() {
+    if (!current) return;
+    const s = explodeEl.value / 100;
+    explodeVal.textContent = explodeEl.value + "%";
+    for (const it of current.items) {
+      it.mesh.position.copy(it.v).multiplyScalar(s);
+      it.mesh.visible = !(it.wall && !wallEl.checked);
+      it.edges.visible = edgesEl.checked;
+    }
+  }
+
+  // Frame the camera on the model at full explode so nothing leaves the view.
+  function frame() {
+    if (!current) return;
+    const keep = explodeEl.value;
+    explodeEl.value = 100; applyState();
+    current.root.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(current.root);
+    const c = new THREE.Vector3(); box.getCenter(c);
+    // Fit the box's corners to both the horizontal and vertical field of view.
+    const az = THREE.MathUtils.degToRad(current.def.azimuth ?? 35), el = THREE.MathUtils.degToRad(current.def.elevation ?? 30);
+    const back = new THREE.Vector3(Math.cos(el) * Math.cos(az), Math.cos(el) * Math.sin(az), Math.sin(el));
+    const right = new THREE.Vector3(0, 0, 1).cross(back).normalize();
+    const up = back.clone().cross(right).normalize();
+    const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), tanH = tanV * camera.aspect;
+    // Use every visible part's own box corners: much tighter than one box round the whole assembly.
+    const pts = [];
+    for (const it of current.items) {
+      if (!it.mesh.visible) continue;
+      const b = new THREE.Box3().setFromObject(it.mesh);
+      for (let i = 0; i < 8; i++) pts.push(new THREE.Vector3(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z));
+    }
+    // Centre on the projected extents, then back off until every point fits.
+    let minR = Infinity, maxR = -Infinity, minU = Infinity, maxU = -Infinity;
+    for (const p of pts) { const q = p.clone().sub(c); minR = Math.min(minR, q.dot(right)); maxR = Math.max(maxR, q.dot(right)); minU = Math.min(minU, q.dot(up)); maxU = Math.max(maxU, q.dot(up)); }
+    c.addScaledVector(right, (minR + maxR) / 2).addScaledVector(up, (minU + maxU) / 2);
+    let dist = 0;
+    for (const p of pts) {
+      const q = p.clone().sub(c), pb = q.dot(back);
+      dist = Math.max(dist, pb + Math.abs(q.dot(right)) / tanH, pb + Math.abs(q.dot(up)) / tanV);
+    }
+    dist *= 1.04;
+    explodeEl.value = keep; applyState();
+    camera.position.copy(c).addScaledVector(back, dist);
+    camera.near = dist / 50; camera.far = dist * 20; camera.updateProjectionMatrix();
+    controls.target.copy(c); controls.update();
+  }
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+
+  function themeSync() {
+    scene.background = stageBg();
+    const ec = new THREE.Color(edgeColor());
+    if (current) current.items.forEach(it => it.edges.material.color.copy(ec));
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick() {
+    resize();
+    if (spinEl.checked && current) current.root.rotation.z += reduceMotion ? 0 : 0.004 * (current.def.up === "y" ? 0 : 1);
+    if (spinEl.checked && current && current.def.up === "y") current.root.rotation.y += reduceMotion ? 0 : 0.004;
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+
+  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => show(t.dataset.model)));
+  explodeEl.addEventListener("input", applyState);
+  wallEl.addEventListener("change", applyState);
+  edgesEl.addEventListener("change", applyState);
+  document.getElementById("reset").addEventListener("click", () => {
+    if (current) { current.root.rotation.z = 0; current.root.rotation.y = 0; }
+    spinEl.checked = false; frame();
+  });
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", themeSync);
+  new MutationObserver(themeSync).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  themeSync();
+  let start = "case";
+  try { const saved = localStorage.getItem("cfp-exploded-tab"); if (MODELS[saved]) start = saved; } catch (e) { /* storage blocked */ }
+  const hash = location.hash.replace("#", "");
+  if (MODELS[hash]) start = hash;
+  show(start).catch(err => { statusEl.textContent = "Could not load the parts: " + err.message; });
+  tick();
+})();
+</script>
+
+</body>
+</html>
