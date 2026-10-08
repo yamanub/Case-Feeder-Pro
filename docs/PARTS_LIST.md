@@ -7,7 +7,7 @@ case or bullet feeder and twice for a dual setup.
 
 | Part | Qty | Notes | Link |
 |---|---|---|---|
-| BigTreeTech SKR Pico V1.0 | 1 | controller | [Amazon](https://www.amazon.com/dp/B09MVJ5XKH) |
+| BigTreeTech SKR Pico V1.0 | 1 | controller | [Amazon](https://a.co/d/09xAvw5X) |
 | LCDWiki ES3C28P 2.8" ESP32-S3 display | 1 | touchscreen | [Amazon](https://www.amazon.com/dp/B0FKG7WRWV) |
 | 24 V fan | 1 | driver cooling, on FAN1; required for dual | [Amazon](https://www.amazon.com/dp/B0757RPCN9) |
 | WS2812 RGB LED | 1 | optional external status light | |
