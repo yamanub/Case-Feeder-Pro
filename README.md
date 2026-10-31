@@ -84,6 +84,7 @@ To turn them around and pull the parts apart yourself, open the
   daily use.
 - [Parts list](docs/PARTS_LIST.md)
 - [Printed parts](docs/PRINTED_PARTS.md): STL files for the feeders and the controller case
+- [Controller protocol](docs/PROTOCOL.md): for running the feeders from another controller instead of the touchscreen
 
 Both firmware images build with [PlatformIO](https://platformio.org/):
 
@@ -101,7 +102,7 @@ pio run -e lcd -t upload
 | `src/feeder_protocol.h` | the UART protocol shared by both |
 | `src/*.h` | display, touch, audio and LVGL configuration for the touchscreen |
 | `lib/FT6336/` | touch controller driver |
-| `docs/` | build guide, parts list, printed parts, and the 3D viewer (`docs/viewer/`) |
+| `docs/` | build guide, parts list, printed parts, controller protocol, and the 3D viewer (`docs/viewer/`) |
 | `stl/` | 3D-printable parts plus DXF and STEP files for cut and machined parts, one folder per assembly |
 
 ## License
