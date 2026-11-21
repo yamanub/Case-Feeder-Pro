@@ -34,7 +34,7 @@ using namespace FeederProtocol;
 static constexpr uint8_t  PIN_CONTROLLER_TX = 43;
 static constexpr uint8_t  PIN_CONTROLLER_RX = 44;
 static constexpr uint32_t CONNECTION_TIMEOUT_MS = 3000;
-#define FW_VERSION "1.0.0"
+#define FW_VERSION "1.1.0"
 
 // LVGL calls this on an internal error; restart instead of hanging.
 extern "C" void lcd_lvgl_assert_hook(void) {
@@ -117,6 +117,7 @@ static int      audioVolume  = 2;
 
 // Shared widgets
 static lv_obj_t *ui_tempLabel, *ui_healthLbl, *ui_linkLed, *ui_linkLbl;
+static lv_obj_t *ui_fanLabel;   // fan speed next to the temperature
 static lv_obj_t *ui_settingsModal, *ui_audioSwitch, *ui_flipSwitch, *ui_machineBtnLbl;
 static lv_obj_t *ui_warnDd[MAX_FEEDERS];
 static lv_obj_t *ui_volBtns[3], *ui_volLbls[3];
@@ -128,7 +129,7 @@ static lv_obj_t *ui_machineModal, *ui_machineOpt[3], *ui_machineOptLbl[3], *ui_m
 static uint8_t   machineChoice = MACHINE_CASE;
 static lv_obj_t *ui_speedBtns[NUM_SPEED_PRESETS], *ui_speedBtnLbls[NUM_SPEED_PRESETS];   // single screen
 // Shared refresh cache
-static int      sharedLastLink = -1, sharedLastTemp = INT16_MIN + 1;
+static int      sharedLastLink = -1, sharedLastTemp = INT16_MIN + 1, sharedLastFan = -2;
 static char     sharedLastHealth[40] = "";
 static uint8_t  tempAckLevel = 0, shownTempLevel = 0;
 static int      shownTempWho = -1;
@@ -814,6 +815,8 @@ static void createSingle(uint8_t i) {
     lv_obj_align(tt, LV_ALIGN_TOP_LEFT, 5, 5);
     ui_tempLabel = ui_label(tc, "--", &lv_font_montserrat_24, COL_TEXT);
     lv_obj_align(ui_tempLabel, LV_ALIGN_BOTTOM_RIGHT, -8, -4);
+    ui_fanLabel = ui_label(tc, "", &lv_font_montserrat_12, COL_MUTED);
+    lv_obj_align(ui_fanLabel, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 
     v.goBtn = lv_btn_create(scr);
     lv_obj_set_size(v.goBtn, cardW, colH);
@@ -916,6 +919,8 @@ static void createDual() {
     lv_obj_t* bar = ui_bar_strip(scr, 24, LV_ALIGN_TOP_MID);
     ui_tempLabel = ui_label(bar, "--", &lv_font_montserrat_12, COL_MUTED);
     lv_obj_align(ui_tempLabel, LV_ALIGN_LEFT_MID, 8, 0);
+    ui_fanLabel = ui_label(bar, "", &lv_font_montserrat_12, COL_MUTED);
+    lv_obj_align(ui_fanLabel, LV_ALIGN_RIGHT_MID, -34, 0);   // just left of the gear
     lv_obj_t* title = ui_label(bar, "DUAL FEEDER PRO", &lv_font_montserrat_16, COL_TEXT);
     lv_obj_align(title, LV_ALIGN_CENTER, 0, 0);
     ui_make_gear(bar, 24);
@@ -952,10 +957,12 @@ static void forgetWidgets() {
         v.lastRateAt = 0;
     }
     ui_tempLabel = ui_healthLbl = ui_linkLed = ui_linkLbl = nullptr;
+    ui_fanLabel = nullptr;
     for (lv_obj_t*& b : ui_speedBtns) b = nullptr;
     for (lv_obj_t*& b : ui_warnDd) b = nullptr;
     sharedLastLink = -1;
     sharedLastTemp = INT16_MIN + 1;
+    sharedLastFan = -2;
     sharedLastHealth[0] = '\0';
     shownTempLevel = 0;
     shownTempWho = -1;
@@ -1112,6 +1119,24 @@ static void refreshShared() {
         else               lv_label_set_text_fmt(ui_tempLabel, "%d\xC2\xB0" "C", shown);
     }
 
+    // Controller fan speed, from the first linked feeder's status frame.
+    int fan = FAN_PERCENT_UNKNOWN;
+    for (uint8_t i = 0; i < MAX_FEEDERS; i++) {
+        const FeederView& v = views[i];
+        if (shownOnScreen(i) && feederLinked(v)) { fan = v.st.fanPercent; break; }
+    }
+    if (fan > 100) fan = FAN_PERCENT_UNKNOWN;
+    if (fan != sharedLastFan && ui_fanLabel) {
+        sharedLastFan = fan;
+        if (fan == FAN_PERCENT_UNKNOWN) lv_label_set_text(ui_fanLabel, "");
+        else lv_label_set_text_fmt(ui_fanLabel, LV_SYMBOL_REFRESH " %d%%", fan);
+        lv_obj_set_style_text_color(ui_fanLabel, lv_color_hex(fan > 0 ? COL_TEXT : COL_MUTED), 0);
+        if (isDual()) {   // right-aligned next to the gear: keep it there as the text width changes
+            lv_obj_update_layout(ui_fanLabel);
+            lv_obj_align(ui_fanLabel, LV_ALIGN_RIGHT_MID, -34, 0);
+        }
+    }
+
     // Driver temperature popup: the hottest driver's band; returns only hotter.
     uint8_t worst = 0;
     int who = -1;
@@ -1168,9 +1193,11 @@ static void handleFrame(uint8_t command, const uint8_t* payload, uint8_t length)
     lastValidFrameAt = millis();
     switch (command) {
         case EVT_STATUS: {
-            if (length != sizeof(StatusPayload)) break;
-            StatusPayload s;
-            memcpy(&s, payload, sizeof(s));
+            // A controller from before the fan field sends one byte less.
+            if (length != sizeof(StatusPayload) && length != STATUS_PAYLOAD_NO_FAN) break;
+            StatusPayload s{};
+            memcpy(&s, payload, length);
+            if (length == STATUS_PAYLOAD_NO_FAN) s.fanPercent = FAN_PERCENT_UNKNOWN;
             if (s.feederIndex >= MAX_FEEDERS) break;
             FeederView& v = views[s.feederIndex];
             v.st = s;

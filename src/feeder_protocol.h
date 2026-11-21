@@ -90,6 +90,7 @@ enum DriverTemp : uint8_t {
 };
 
 constexpr int16_t BOARD_TEMP_UNKNOWN = INT16_MIN;
+constexpr uint8_t FAN_PERCENT_UNKNOWN = 0xFF;   // the controller reports no fan speed
 
 #pragma pack(push, 1)
 struct StatusPayload {
@@ -108,7 +109,10 @@ struct StatusPayload {
     uint8_t  feederIndex;       // which feeder this frame describes
     uint8_t  feederCount;       // how many feeders this controller runs
     uint8_t  productType;       // ProductType
+    uint8_t  fanPercent;        // controller fan speed 0-100, FAN_PERCENT_UNKNOWN if not reported
 };
+// A controller built before fanPercent existed sends this many bytes.
+constexpr uint8_t STATUS_PAYLOAD_NO_FAN = sizeof(StatusPayload) - 1;
 #pragma pack(pop)
 static_assert(sizeof(StatusPayload) <= MAX_PAYLOAD, "StatusPayload too large");
 

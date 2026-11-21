@@ -39,6 +39,8 @@ using namespace FeederProtocol;
 // ============================================================
 //  SHARED PINS / CONSTANTS
 // ============================================================
+#define FW_VERSION "1.1.1"   // controller firmware: 1.1.1 = fan curve 30/28/45 C; 1.1.0 = temperature-controlled PWM fan, fan speed sent to the screen
+
 static constexpr uint8_t PIN_TMC_TX = 8;    // UART1
 static constexpr uint8_t PIN_TMC_RX = 9;
 static constexpr uint8_t PIN_RGB    = 24;
@@ -67,6 +69,15 @@ static constexpr uint32_t DRIVER_RECHECK_MS = 250;
 static constexpr uint32_t TELEMETRY_PERIOD_MS = 500;
 static constexpr uint32_t LOOP_WDT_MS       = 2000;
 static constexpr uint32_t TEMP_SAMPLE_MS    = 1000;
+// Fan curve (board temperature -> fan speed). Off until FAN_ON_C, then
+// FAN_MIN_PCT, rising in a straight line to 100 % at FAN_FULL_C. It stays on
+// at FAN_MIN_PCT until the board cools to FAN_OFF_C.
+static constexpr float    FAN_ON_C          = 30.0f;
+static constexpr float    FAN_OFF_C         = 28.0f;
+static constexpr float    FAN_FULL_C        = 45.0f;
+static constexpr uint8_t  FAN_MIN_PCT       = 40;      // quietest speed that still turns the fan reliably
+static constexpr uint32_t FAN_PWM_HZ        = 25000;   // above hearing, so no whine
+static constexpr uint32_t FAN_KICK_MS       = 500;     // full speed at start so the fan spins up
 static constexpr uint8_t  LED_BRIGHTNESS    = 40;
 static constexpr uint8_t  NUM_FEEDERS       = 2;
 static constexpr uint8_t  MAX_BANDS         = 6;
@@ -245,6 +256,10 @@ static uint8_t selected = 0;           // serial tuning commands apply to this f
 static uint32_t lastStatusAt = 0, lastLcdRxAt = 0, lastTelemetry = 0, lastTempAt = 0;
 static bool     telemetryOn = false, beamLogOn = false;
 static float    boardTempC = NAN;
+static bool     fanOn = true;          // on from boot until the temperature is known
+static uint8_t  fanPct = 0xFF;         // current speed in percent (0xFF = not set yet)
+static uint     fanSlice = 0, fanChannel = 0;
+static uint32_t fanTop = 0, fanKickUntil = 0;
 
 struct RxParser {
     enum Stage : uint8_t { WAIT_SOF, READ_LEN, READ_BODY, CRC_LOW, CRC_HIGH, WAIT_EOF } stage = WAIT_SOF;
@@ -567,6 +582,7 @@ static void sendStatus(Feeder& f) {
     s.feederIndex     = f.index;
     s.feederCount     = machineFeederCount();
     s.productType     = f.cfg->productType;
+    s.fanPercent      = (fanPct <= 100) ? fanPct : FAN_PERCENT_UNKNOWN;
     writeFrame(EVT_STATUS, &s, sizeof(s));
 }
 
@@ -801,6 +817,51 @@ static void serviceDriverTemp(Feeder& f) {
     Serial.printf("%c driver temperature: %s -> %s (board %s C)\n", f.cfg->tag,
                   driverTempStr(f.driverTempLevel), driverTempStr(level), boardTempStr());
     f.driverTempLevel = level;
+}
+
+// Fan: PWM on a hardware slice of its own (GPIO17, not shared with the step
+// pins). Starts at full speed until the temperature is known.
+static void fanInit() {
+    gpio_set_function(PIN_FAN, GPIO_FUNC_PWM);
+    fanSlice   = pwm_gpio_to_slice_num(PIN_FAN);
+    fanChannel = pwm_gpio_to_channel(PIN_FAN);
+    fanTop     = clock_get_hz(clk_sys) / FAN_PWM_HZ;
+    pwm_set_clkdiv_int_frac(fanSlice, 1, 0);
+    pwm_set_wrap(fanSlice, (uint16_t)(fanTop - 1));
+    pwm_set_chan_level(fanSlice, fanChannel, (uint16_t)fanTop);   // 100 %
+    pwm_set_enabled(fanSlice, true);
+    fanPct = 100;
+}
+
+static void fanSetPercent(uint8_t pct) {
+    if (pct == fanPct) return;
+    fanPct = pct;
+    pwm_set_chan_level(fanSlice, fanChannel, (uint16_t)((fanTop * pct) / 100));
+}
+
+// On when the board reaches FAN_ON_C or a motor driver reports its 120 C
+// pre-warning; off again at FAN_OFF_C. While on, the speed follows the curve.
+// An unknown temperature or a hot driver means full speed.
+static void serviceFan() {
+    bool driverHot = false;
+    for (const Feeder& f : feeders)
+        if (f.enabled && f.driverTempLevel >= DRIVER_TEMP_120) driverHot = true;
+    const bool unknown = isnan(boardTempC);
+
+    bool want = fanOn;
+    if (unknown || driverHot || boardTempC >= FAN_ON_C) want = true;
+    else if (boardTempC <= FAN_OFF_C)                   want = false;
+    if (want && !fanOn) fanKickUntil = millis() + FAN_KICK_MS;
+    fanOn = want;
+
+    uint8_t pct;
+    if (!fanOn)                                          pct = 0;
+    else if (unknown || driverHot)                       pct = 100;
+    else if ((int32_t)(fanKickUntil - millis()) > 0)     pct = 100;
+    else if (boardTempC >= FAN_FULL_C)                   pct = 100;
+    else if (boardTempC <= FAN_ON_C)                     pct = FAN_MIN_PCT;
+    else pct = FAN_MIN_PCT + (uint8_t)lroundf((100 - FAN_MIN_PCT) * (boardTempC - FAN_ON_C) / (FAN_FULL_C - FAN_ON_C));
+    fanSetPercent(pct);
 }
 
 // Board temperature: the RP2040's own sensor, smoothed.
@@ -1097,9 +1158,10 @@ static void printFeeder(Feeder& f) {
 
 static void printStatus() {
     Serial.println("=== Case Feeder Pro controller ===");
+    Serial.printf("  firmware:     %s\n", FW_VERSION);
     Serial.printf("  machine:      %s\n", machineName(persist.machineMask));
-    Serial.printf("  uptime:       %lu s, board temp %s C, motor current %u mA\n",
-                  (unsigned long)(millis() / 1000), boardTempStr(), RMS_CURRENT_MA);
+    Serial.printf("  uptime:       %lu s, board temp %s C, fan %u%%, motor current %u mA\n",
+                  (unsigned long)(millis() / 1000), boardTempStr(), (unsigned)fanPct, RMS_CURRENT_MA);
     Serial.printf("  LCD:          %s\n", (millis() - lastLcdRxAt < LCD_TIMEOUT_MS) ? "connected" : "not connected");
     Serial.printf("  telemetry / beam log: %s / %s\n", telemetryOn ? "on" : "off", beamLogOn ? "on" : "off");
     for (Feeder& f : feeders) if (f.enabled) printFeeder(f);
@@ -1247,8 +1309,7 @@ void setup() {
     }
     for (uint8_t p : PINS_UNUSED_DRIVER_EN) { pinMode(p, OUTPUT); digitalWrite(p, HIGH); }
     for (uint8_t p : PINS_PARKED_LOW)       { pinMode(p, OUTPUT); digitalWrite(p, LOW); }
-    pinMode(PIN_FAN, OUTPUT);
-    digitalWrite(PIN_FAN, HIGH);
+    fanInit();                     // full speed until the first temperature reading; serviceFan() takes over
 
     statusPixel.begin();
     statusPixel.setBrightness(LED_BRIGHTNESS);
@@ -1257,7 +1318,7 @@ void setup() {
 
     Serial.begin(115200);
     delay(50);
-    Serial.println("\n=== Case Feeder Pro controller ===");
+    Serial.println("\n=== Case Feeder Pro controller " FW_VERSION " ===");
 
     persistLoad();
     for (Feeder& f : feeders) {
@@ -1317,5 +1378,6 @@ void loop() {
     serviceLed();
     handleSerial();
     serviceTemps();
+    serviceFan();
     updateTelemetry();
 }
